@@ -26,15 +26,15 @@ class JobQueueExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('jms_job_queue_path', array($this, 'generatePath'), array('is_safe' => array('html' => true)))
+            new TwigFunction('jms_job_queue_path', $this->generatePath(...), array('is_safe' => array('html' => true)))
         );
     }
 
     public function getFilters()
     {
         return array(
-            new TwigFilter('jms_job_queue_linkname', array($this, 'getLinkname')),
-            new TwigFilter('jms_job_queue_args', array($this, 'formatArgs'))
+            new TwigFilter('jms_job_queue_linkname', $this->getLinkname(...)),
+            new TwigFilter('jms_job_queue_args', $this->formatArgs(...))
         );
     }
 
