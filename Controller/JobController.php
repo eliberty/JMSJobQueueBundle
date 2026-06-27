@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class JobController extends AbstractController
 {
@@ -33,9 +33,7 @@ class JobController extends AbstractController
         $this->jobManager = $jobManager;
     }
 
-    /**
-     * @Route("/", name = "jms_jobs_overview")
-     */
+    #[Route('/', name: 'jms_jobs_overview')]
     public function overviewAction(Request $request): Response
     {
         $jobFilter = JobFilter::fromRequest($request);
@@ -83,9 +81,9 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name = "jms_jobs_details")
      * @throws Exception
      */
+    #[Route('/{id}', name: 'jms_jobs_details')]
     public function detailsAction(Job $job): Response
     {
         $relatedEntities = array();
@@ -144,9 +142,7 @@ class JobController extends AbstractController
         ));
     }
 
-    /**
-     * @Route("/{id}/retry", name = "jms_jobs_retry_job")
-     */
+    #[Route('/{id}/retry', name: 'jms_jobs_retry_job')]
     public function retryJobAction(Job $job): RedirectResponse
     {
         $state = $job->getState();
