@@ -433,6 +433,36 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
     }
 
     /**
+     * Returns the first element of this collection that satisfies the predicate p.
+     *
+     * @param Closure $p The predicate.
+     */
+    public function findFirst(Closure $p): mixed
+    {
+        $this->initialize();
+
+        foreach ($this->entities as $key => $element) {
+            if ($p($key, $element)) {
+                return $element;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Reduces the collection to a single value by iteratively applying the callback.
+     *
+     * @param Closure $func The callback: fn(mixed $carry, mixed $element): mixed.
+     */
+    public function reduce(Closure $func, mixed $initial = null): mixed
+    {
+        $this->initialize();
+
+        return array_reduce($this->entities, $func, $initial);
+    }
+
+    /**
      * Returns a string representation of this object.
      *
      * @return string
