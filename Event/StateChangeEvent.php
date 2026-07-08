@@ -37,7 +37,7 @@ class StateChangeEvent extends JobEvent
         return $this->newState;
     }
 
-    public function setNewState($state)
+    public function setNewState($state): void
     {
         $this->newState = $state;
     }

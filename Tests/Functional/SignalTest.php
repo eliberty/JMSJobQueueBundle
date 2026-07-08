@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 
 class SignalTest extends TestCase
 {
-    public function testControlledExit()
+    public function testControlledExit(): void
     {
         if ( ! extension_loaded('pcntl')) {
             $this->markTestSkipped('PCNTL extension is not loaded.');
@@ -24,7 +24,7 @@ class SignalTest extends TestCase
         $this->assertTrueWithin(
             3,
             function() use ($proc) { return false !== strpos($proc->getOutput(), 'Signal Handlers have been installed'); },
-            function() use ($proc) {
+            function() use ($proc): void {
                 $this->fail('Signal handlers were not installed: '.$proc->getOutput().$proc->getErrorOutput());
             }
         );
@@ -34,7 +34,7 @@ class SignalTest extends TestCase
         $this->assertTrueWithin(
             3,
             function() use ($proc) { return false !== strpos($proc->getOutput(), 'Received SIGTERM'); },
-            function() use ($proc) {
+            function() use ($proc): void {
                 $this->fail('Signal was not received by process within 3 seconds: ' . $proc->getOutput() . $proc->getErrorOutput());
             }
         );
@@ -42,7 +42,7 @@ class SignalTest extends TestCase
         $this->assertTrueWithin(
             3,
             function() use ($proc) { return ! $proc->isRunning(); },
-            function() use ($proc) {
+            function() use ($proc): void {
                 $this->fail('Process did not terminate within 3 seconds: '.$proc->getOutput().$proc->getErrorOutput());
             }
         );
@@ -50,7 +50,7 @@ class SignalTest extends TestCase
         $this->assertContains('All jobs finished, exiting.', $proc->getOutput());
     }
 
-    private function assertTrueWithin($seconds, callable $block, callable $failureHandler)
+    private function assertTrueWithin($seconds, callable $block, callable $failureHandler): void
     {
         $start = microtime(true);
         while (true) {

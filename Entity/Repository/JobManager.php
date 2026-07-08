@@ -54,7 +54,7 @@ class JobManager
     /**
      * @throws NonUniqueResultException
      */
-    public function findJob($command, array $args = array())
+    public function findJob($command, array $args = array()): mixed
     {
         return $this->entityManager->createQuery("SELECT j FROM JMSJobQueueBundle:Job j WHERE j.command = :command AND j.args = :args")
             ->setParameter('command', $command)
@@ -151,7 +151,7 @@ class JobManager
         return false;
     }
 
-    public function findAllForRelatedEntity($relatedEntity)
+    public function findAllForRelatedEntity($relatedEntity): mixed
     {
         list($relClass, $relId) = $this->getRelatedEntityIdentifier($relatedEntity);
 
@@ -174,7 +174,7 @@ class JobManager
      * @throws NonUniqueResultException
      * @throws MappingException
      */
-    public function findJobForRelatedEntity($command, $relatedEntity, array $states = array())
+    public function findJobForRelatedEntity($command, $relatedEntity, array $states = array()): mixed
     {
         list($relClass, $relId) = $this->getRelatedEntityIdentifier($relatedEntity);
 
@@ -226,7 +226,7 @@ class JobManager
     /**
      * @throws NonUniqueResultException
      */
-    public function findPendingJob(array $excludedIds = array(), array $excludedQueues = array(), array $restrictedQueues = array())
+    public function findPendingJob(array $excludedIds = array(), array $excludedQueues = array(), array $restrictedQueues = array()): mixed
     {
         $qb = $this->entityManager->createQueryBuilder();
         $qb->select('j')->from('JMSJobQueueBundle:Job', 'j')
@@ -268,7 +268,7 @@ class JobManager
      * @throws ORMException
      * @throws Exception
      */
-    public function closeJob(Job $job, $finalState)
+    public function closeJob(Job $job, $finalState): void
     {
         $this->entityManager->getConnection()->beginTransaction();
         try {
@@ -294,7 +294,7 @@ class JobManager
         }
     }
 
-    private function closeJobInternal(Job $job, $finalState, array &$visited = array())
+    private function closeJobInternal(Job $job, $finalState, array &$visited = array()): void
     {
         if (in_array($job, $visited, true)) {
             return;
@@ -429,7 +429,7 @@ class JobManager
             ->fetchFirstColumn();
     }
 
-    public function findLastJobsWithError($nbJobs = 10)
+    public function findLastJobsWithError($nbJobs = 10): mixed
     {
         return $this->entityManager->createQuery("SELECT j FROM JMSJobQueueBundle:Job j WHERE j.state IN (:errorStates) AND j.originalJob IS NULL ORDER BY j.closedAt DESC")
                     ->setParameter('errorStates', array(Job::STATE_TERMINATED, Job::STATE_FAILED))

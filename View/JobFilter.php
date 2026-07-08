@@ -20,12 +20,12 @@ class JobFilter
         return $filter;
     }
 
-    public function isDefaultPage()
+    public function isDefaultPage(): bool
     {
         return $this->page === 1 && empty($this->command) && empty($this->state);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return array(
             'page' => $this->page,

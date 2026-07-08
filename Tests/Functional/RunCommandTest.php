@@ -9,10 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class RunCommandTest extends BaseTestCase
 {
-    private $app;
+    private Application $app;
     private $em;
 
-    public function testRun()
+    public function testRun(): void
     {
         $a = new Job('adoigjaoisdjfijasodifjoiajsdf');
         $b = new Job('b', array('foo'));
@@ -31,7 +31,7 @@ class RunCommandTest extends BaseTestCase
         $this->assertEquals('canceled', $b->getState());
     }
 
-    public function testExitsAfterMaxRuntime()
+    public function testExitsAfterMaxRuntime(): void
     {
         $time = time();
         $output = $this->runConsoleCommand(array('--max-runtime' => 1, '--worker-name' => 'test'));
@@ -41,7 +41,7 @@ class RunCommandTest extends BaseTestCase
         $this->assertTrue($runtime >= 2 && $runtime < 8);
     }
 
-    public function testSuccessfulCommand()
+    public function testSuccessfulCommand(): void
     {
         $job = new Job('jms-job-queue:successful-cmd');
         $this->em->persist($job);
@@ -54,7 +54,7 @@ class RunCommandTest extends BaseTestCase
     /**
      * @group queues
      */
-    public function testQueueWithLimitedConcurrentJobs()
+    public function testQueueWithLimitedConcurrentJobs(): void
     {
         $outputFile = tempnam(sys_get_temp_dir(), 'job-output');
         for ($i=0; $i<4; $i++) {
@@ -88,7 +88,7 @@ OUTPUT
     /**
      * @group queues
      */
-    public function testQueueWithMoreThanOneConcurrentJob()
+    public function testQueueWithMoreThanOneConcurrentJob(): void
     {
         $outputFile = tempnam(sys_get_temp_dir(), 'job-output');
         for ($i=0; $i<3; $i++) {
@@ -121,7 +121,7 @@ OUTPUT
     /**
      * @group queues
      */
-    public function testSingleRestrictedQueue()
+    public function testSingleRestrictedQueue(): void
     {
         $a = new Job('jms-job-queue:successful-cmd');
         $b = new Job('jms-job-queue:successful-cmd', array(), true, 'other_queue');
@@ -140,7 +140,7 @@ OUTPUT
     /**
      * @group queues
      */
-    public function testMultipleRestrictedQueues()
+    public function testMultipleRestrictedQueues(): void
     {
         $a = new Job('jms-job-queue:successful-cmd');
         $b = new Job('jms-job-queue:successful-cmd', array(), true, 'other_queue');
@@ -159,7 +159,7 @@ OUTPUT
     /**
      * @group queues
      */
-    public function testNoRestrictedQueue()
+    public function testNoRestrictedQueue(): void
     {
         $a = new Job('jms-job-queue:successful-cmd');
         $b = new Job('jms-job-queue:successful-cmd', array(), true, 'other_queue');
@@ -178,7 +178,7 @@ OUTPUT
     /**
      * @group retry
      */
-    public function testRetry()
+    public function testRetry(): void
     {
         $job = new Job('jms-job-queue:sometimes-failing-cmd', array(time()));
         $job->setMaxRetries(5);
@@ -192,7 +192,7 @@ OUTPUT
         $this->assertEquals(1, $job->getExitCode());
     }
 
-    public function testJobIsTerminatedIfMaxRuntimeIsExceeded()
+    public function testJobIsTerminatedIfMaxRuntimeIsExceeded(): void
     {
         $job = new Job('jms-job-queue:never-ending');
         $job->setMaxRuntime(1);
@@ -206,7 +206,7 @@ OUTPUT
     /**
      * @group priority
      */
-    public function testJobsWithHigherPriorityAreStartedFirst()
+    public function testJobsWithHigherPriorityAreStartedFirst(): void
     {
         $job = new Job('jms-job-queue:successful-cmd');
         $this->em->persist($job);
@@ -232,7 +232,7 @@ OUTPUT
     /**
      * @group priority
      */
-    public function testJobsAreStartedInCreationOrderWhenPriorityIsEqual()
+    public function testJobsAreStartedInCreationOrderWhenPriorityIsEqual(): void
     {
         $job = new Job('jms-job-queue:successful-cmd', array(), true, Job::DEFAULT_QUEUE, Job::PRIORITY_HIGH);
         $this->em->persist($job);
@@ -259,7 +259,7 @@ OUTPUT
     /**
      * @group exception
      */
-    public function testExceptionStackTraceIsSaved()
+    public function testExceptionStackTraceIsSaved(): void
     {
         $job = new Job('jms-job-queue:throws-exception-cmd');
         $this->em->persist($job);

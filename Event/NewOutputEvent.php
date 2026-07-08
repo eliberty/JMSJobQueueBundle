@@ -41,7 +41,7 @@ class NewOutputEvent extends JobEvent
         return $this->newOutput;
     }
 
-    public function setNewOutput($output)
+    public function setNewOutput($output): void
     {
         $this->newOutput = $output;
     }

@@ -11,8 +11,6 @@ interface RetryScheduler
      *
      * When this method is called, it has already been decided that a retry should be attempted. The implementation
      * should needs to decide when that should happen.
-     *
-     * @return \DateTime
      */
     public function scheduleNextRetry(Job $originalJob): \DateTime;
 }

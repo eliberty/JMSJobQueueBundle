@@ -19,8 +19,6 @@ class SafeObjectType extends Type
      * {@inheritDoc}
      *
      * @param mixed $value
-     *
-     * @return string
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {

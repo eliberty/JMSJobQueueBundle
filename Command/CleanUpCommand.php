@@ -114,7 +114,7 @@ class CleanUpCommand extends Command
 
             $result = $con->executeQuery($incomingDepsSql, array('id' => $job->getId()));
             if ($result->fetchOne() !== false) {
-                $this->entityManager->wrapInTransaction(function() use ($job) {
+                $this->entityManager->wrapInTransaction(function() use ($job): void {
                     $this->resolveDependencies($job);
                     $this->entityManager->remove($job);
                 });
@@ -133,12 +133,11 @@ class CleanUpCommand extends Command
     }
 
     /**
-     * @param Job $job
      * @throws Exception
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    private function resolveDependencies(Job $job)
+    private function resolveDependencies(Job $job): void
     {
         // If this job has failed, or has otherwise not succeeded, we need to set the
         // incoming dependencies to failed if that has not been done already.

@@ -14,7 +14,7 @@ class ConcurrencyTest extends BaseTestCase
     private $configFile;
     private $databaseFile;
 
-    public function testHighConcurrency()
+    public function testHighConcurrency(): void
     {
         $this->startWorker('one');
         $this->startWorker('two');
@@ -84,14 +84,14 @@ CONFIG
 
         foreach ($this->processes as $process) {
             if ( ! $process->isRunning()) {
-                throw new\ RuntimeException(sprintf('The process "%s" exited prematurely:'."\n\n%s\n\n%s", $process->getCommandLine(), $process->getOutput(), $process->getErrorOutput()));
+                throw new \RuntimeException(sprintf('The process "%s" exited prematurely:'."\n\n%s\n\n%s", $process->getCommandLine(), $process->getOutput(), $process->getErrorOutput()));
             }
 
             $process->stop(5);
         }
     }
 
-    private function waitUntilJobsProcessed($maxRuntime)
+    private function waitUntilJobsProcessed($maxRuntime): void
     {
         $start = time();
         do {
@@ -114,7 +114,7 @@ CONFIG
         }
     }
 
-    private function startWorker($name)
+    private function startWorker($name): void
     {
         $proc = new Process('exec '.PHP_BINARY.' '.escapeshellarg(__DIR__.'/console').' jms-job-queue:run --worker-name='.$name, null, array(
             'SYMFONY_CONFIG' => $this->configFile,

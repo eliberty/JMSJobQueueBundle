@@ -21,8 +21,8 @@ use JMS\JobQueueBundle\Entity\Job;
  */
 class PersistentRelatedEntitiesCollection implements Collection, Selectable
 {
-    private $registry;
-    private $job;
+    private ManagerRegistry $registry;
+    private Job $job;
     private $entities;
 
     public function __construct(ManagerRegistry $registry, Job $job)
@@ -133,7 +133,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
      * @see containsKey()
      *
      * @param mixed $offset
-     * @return bool
      */
     public function offsetExists($offset): bool
     {
@@ -273,8 +272,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
 
     /**
      * Gets all keys/indexes of the collection elements.
-     *
-     * @return array
      */
     public function getKeys(): array
     {
@@ -285,8 +282,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
 
     /**
      * Gets all elements.
-     *
-     * @return array
      */
     public function getValues(): array
     {
@@ -350,8 +345,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
 
     /**
      * Gets an iterator for iterating over the elements in the collection.
-     *
-     * @return ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {
@@ -363,9 +356,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
     /**
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
-     *
-     * @param Closure $func
-     * @return Collection
      */
     public function map(Closure $func): Collection
     {
@@ -489,7 +479,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
      *
      * @param int $offset
      * @param int $length
-     * @return array
      */
     public function slice($offset, $length = null): array
     {
@@ -501,9 +490,6 @@ class PersistentRelatedEntitiesCollection implements Collection, Selectable
     /**
      * Select all elements from a selectable that match the criteria and
      * return a new collection containing these elements.
-     *
-     * @param  Criteria $criteria
-     * @return Collection
      */
     public function matching(Criteria $criteria): Collection
     {

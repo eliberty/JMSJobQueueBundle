@@ -10,12 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 class CronTest extends BaseTestCase
 {
     /** @var Application */
-    private $app;
+    private Application $app;
 
     /** @var EntityManager */
     private $em;
 
-    public function testSchedulesCommands()
+    public function testSchedulesCommands(): void
     {
         $output = $this->doRun(array('--min-job-interval' => 1, '--max-runtime' => 12));
         $this->assertEquals(2, substr_count($output, 'Scheduling command scheduled-every-few-seconds'), $output);

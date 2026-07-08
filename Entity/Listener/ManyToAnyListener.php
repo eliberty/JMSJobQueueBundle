@@ -22,14 +22,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ManyToAnyListener
 {
-    private $registry;
-    private $ref;
+    private ManagerRegistry $registry;
+    private \ReflectionProperty $ref;
 
     public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
         $this->ref = new \ReflectionProperty('JMS\JobQueueBundle\Entity\Job', 'relatedEntities');
-        $this->ref->setAccessible(true);
     }
 
     public function postLoad(LifecycleEventArgs $event): void

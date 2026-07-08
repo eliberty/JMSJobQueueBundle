@@ -9,7 +9,7 @@ use Twig\Extension\AbstractExtension;
 
 class JobQueueExtension extends AbstractExtension
 {
-    private $linkGenerators = array();
+    private array $linkGenerators;
 
     public function __construct(array $generators = array())
     {
@@ -38,7 +38,7 @@ class JobQueueExtension extends AbstractExtension
         );
     }
 
-    public function formatArgs(array $args, $maxLength = 60)
+    public function formatArgs(array $args, $maxLength = 60): string
     {
         $str = '';
         $first = true;
@@ -61,7 +61,7 @@ class JobQueueExtension extends AbstractExtension
         return $str;
     }
 
-    public function isLinkable($entity)
+    public function isLinkable($entity): bool
     {
         foreach ($this->linkGenerators as $generator) {
             if ($generator->supports($entity)) {
@@ -94,7 +94,7 @@ class JobQueueExtension extends AbstractExtension
         throw new \RuntimeException(sprintf('The entity "%s" has no link generator.', get_class($entity)));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'jms_job_queue';
     }

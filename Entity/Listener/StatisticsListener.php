@@ -12,7 +12,7 @@ class StatisticsListener
      * @throws SchemaException
      * @throws MappingException
      */
-    public function postGenerateSchema(GenerateSchemaEventArgs $event)
+    public function postGenerateSchema(GenerateSchemaEventArgs $event): void
     {
         $schema = $event->getSchema();
 
