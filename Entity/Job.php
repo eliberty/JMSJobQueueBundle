@@ -92,8 +92,11 @@ class Job
     #[ORM\Column(type: 'bigint', options: ['unsigned' => true])]
     private $id;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 15)]
-    private string $state;
+    private $state;
 
     #[ORM\Column(type: 'string', length: Job::MAX_QUEUE_LENGTH)]
     private $queue;
@@ -101,8 +104,11 @@ class Job
     #[ORM\Column(type: 'smallint')]
     private $priority = 0;
 
+    /**
+     * @var \DateTime
+     */
     #[ORM\Column(type: 'datetime', name: 'createdAt')]
-    private \DateTime $createdAt;
+    private $createdAt;
 
     #[ORM\Column(type: 'datetime', name: 'startedAt', nullable: true)]
     private $startedAt;
@@ -113,8 +119,11 @@ class Job
     #[ORM\Column(type: 'string', name: 'workerName', length: 50, nullable: true)]
     private $workerName;
 
+    /**
+     * @var \DateTime|null
+     */
     #[ORM\Column(type: 'datetime', name: 'executeAfter', nullable: true)]
-    private \DateTime $executeAfter;
+    private $executeAfter;
 
     #[ORM\Column(type: 'datetime', name: 'closedAt', nullable: true)]
     private $closedAt;
@@ -122,8 +131,11 @@ class Job
     #[ORM\Column(type: 'string')]
     private $command;
 
+    /**
+     * @var array
+     */
     #[ORM\Column(type: 'json')]
-    private array $args;
+    private $args;
 
     #[ORM\ManyToMany(targetEntity: Job::class, fetch: 'EAGER')]
     #[ORM\JoinTable(name: 'jms_job_dependencies')]
